@@ -1,6 +1,18 @@
 ngWP.app
+    .factory('Products',function($resource){
+        return $resource( ngWP.config.api + 'calderawp_api/v2/products/:ID/:sub_product?per_page=:per_page', {
+            /**
+             * without @ is default value
+             */
+            ID:'@id',
+            per_page: ngWP.config.posts_per_page * 3,
+            sub_product: '@sub_product'
+        }, {
+            query: { method: 'GET', isArray: false }
+        });
+    })
     .factory('Posts',function($resource){
-        return $resource( ngWP.config.api + 'wp/v2/:post_type/:ID?filter[posts_per_page]=:per_page&filter[post_author]=:author', {
+        return $resource( ngWP.config.api + 'wp/v2/:post_type/:ID?per_page=:per_page&filter[post_author]=:author', {
             /**
              * without @ is default value
              */
@@ -24,7 +36,7 @@ ngWP.app
                  * If category
                  */
                 if( data.categories ) {
-                    var url = ngWP.config.api + 'wp/v2/' + data.post_type + '?filter[posts_per_page]=' + ngWP.config.posts_per_page * 3 + '&categories=' + data.categories;
+                    var url = ngWP.config.api + 'wp/v2/' + data.post_type + '?per_page=' + ngWP.config.posts_per_page * 3 + '&categories=' + data.categories;
                     $http.get( url ).success(function(posts_res, status, headers ) {
                         var more_data = headers();
                         deferred.resolve({

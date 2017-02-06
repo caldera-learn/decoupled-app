@@ -26,6 +26,7 @@ var jsFileList = [
     './node_modules/angular-ui-router/release/angular-ui-router.min.js',
     './node_modules/angular-local-storage/dist/angular-local-storage.min.js',
     './node_modules/angular-utils-pagination/dirPagination.js',
+    './node_modules/underscore/underscore-min.js',
     './assets/js/config.js',
     './assets/js/angular-front-end-app.js',
     './assets/js/factories/*.js',

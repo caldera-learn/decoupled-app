@@ -14,22 +14,22 @@ ngWP.app = angular.module( 'angular-front-end', ['ngResource', 'ui.router', 'Loc
 
         /** State Change Logging **/
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams, options){
-            //console.log( 'from ',fromState );
-            //console.log( 'to ', toState );
+            // console.log( 'from ',fromState );
+            // console.log( 'to ', toState );
         });
     })
     .config(
-        ['localStorageServiceProvider', 'paginationTemplateProvider', '$stateProvider', '$urlRouterProvider',
-        function( localStorageServiceProvider, paginationTemplateProvider, $stateProvider,$urlRouterProvider ) {
+        ['localStorageServiceProvider', 'paginationTemplateProvider', '$stateProvider', '$urlRouterProvider', '$locationProvider',
+        function( localStorageServiceProvider, paginationTemplateProvider, $stateProvider,$urlRouterProvider, $locationProvider ) {
         localStorageServiceProvider.setPrefix('wp');
         paginationTemplateProvider.setPath('./templates/pagination.tpl.html');
 
         $urlRouterProvider.otherwise('/');
         $stateProvider
-            .state('archive',{
-                url:'/:post_type',
-                controller:'listView',
-                templateUrl: 'templates/list.html'
+            .state('products', {
+                url: '/products/:sub_product',
+                controller: 'productView',
+                templateUrl: 'templates/products.html'
             })
             .state('author',{
                 url:'/author/:author',
@@ -45,6 +45,11 @@ ngWP.app = angular.module( 'angular-front-end', ['ngResource', 'ui.router', 'Loc
                 url:'/:cpt/:slug',
                 controller:'singleView',
                 templateUrl: 'templates/single.html'
+            })
+            .state('archive',{
+                url:'/:post_type',
+                controller:'listView',
+                templateUrl: 'templates/list.html'
             })
     }])
     .filter( 'to_trusted', function( $sce ){
@@ -123,10 +128,10 @@ ngWP.app = angular.module( 'angular-front-end', ['ngResource', 'ui.router', 'Loc
 
         $http({
             url: ngWP.config.api
-        } ).success( function( res ){
+        } ).then( function( res ){
             $scope.site = {};
-            $scope.site.name = res.name;
-            $scope.site.desc = res.description;
+            $scope.site.name = res.data.name;
+            $scope.site.desc = res.data.description;
         });
 
     }])
