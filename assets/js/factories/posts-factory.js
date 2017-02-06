@@ -37,10 +37,10 @@ ngWP.app
                  */
                 if( data.categories ) {
                     var url = ngWP.config.api + 'wp/v2/' + data.post_type + '?per_page=' + ngWP.config.posts_per_page * 3 + '&categories=' + data.categories;
-                    $http.get( url ).success(function(posts_res, status, headers ) {
-                        var more_data = headers();
+                    $http({ method: 'GET', url: url }).then(function(posts_res) {
+                        var more_data = posts_res.headers();
                         deferred.resolve({
-                            posts: posts_res,
+                            posts: posts_res.data,
                             total_posts: more_data['x-wp-total']
                         });
                     });

@@ -9,8 +9,10 @@
                         {{post.excerpt}}
                     </div>
                     <div class="col-sm-4">
-                        <img class="img-responsive" ng-src="{{post.image_src}}" alt="Caldera Product" />
-                        <a class="btn btn-primary btn-block" ui-sref="single({cpt:post.type,slug:post.slug})">View</a>
+                        <a ng-href="{{post.link}}" target="_blank">
+                            <img class="img-responsive" ng-src="{{post.image_src}}" alt="Caldera Product" />
+                        </a>
+                        <a class="btn btn-primary btn-block" ng-href="{{post.link}}" target="_blank">View</a>
                     </div>
                 </article>
             </div>
